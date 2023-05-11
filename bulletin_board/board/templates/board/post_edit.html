@@ -1,0 +1,12 @@
+{% block title %}
+<h1>Создать объявление</h1>
+<hr>
+{% endblock title %}
+
+{% block content %}
+<form enctype="multipart/form-data" action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Сохранить"/>
+</form>
+{% endblock content %}

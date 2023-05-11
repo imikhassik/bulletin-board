@@ -1,0 +1,20 @@
+{% block title %}
+<h1>Объявления</h1>
+{% endblock title %}
+
+{% block content %}
+{% if post_list %}
+<table>
+    {% for post in post_list %}
+    <tr>
+        <td>{{ post.title }}</td>
+        <td>{{ post.body }}</td>
+        <td>{{ post.category }}</td>
+        <td>{{ post.user }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+    Объявлений нет
+{% endif %}
+{% endblock content %}
