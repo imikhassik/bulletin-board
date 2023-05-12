@@ -11,7 +11,7 @@
         <p><h2>{{ post.title }}</h2></p>
         <hr>
         <p>{{ post.body|safe }}</p>
-        <p>Создано: {{ post.user }} в категории {{ post.category }}</p>
+        <p>Создано пользователем {{ post.user }} в категории "{{ post.get_category_display }}"</p>
         <hr>
     {% endfor %}
     {% else %}

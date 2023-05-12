@@ -11,8 +11,8 @@
     <hr>
     <pre>{{ post.body|safe }}</pre>
     <hr>
-    Отправил: {{ post.user }}
-    Категория: {{ post.category }}
+    Отправил: {{ post.user }}<br>
+    Категория: {{ post.get_category_display }}
     {% endblock content %}
     </body>
 </html>
