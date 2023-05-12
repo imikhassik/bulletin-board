@@ -4,16 +4,15 @@
     </head>
     <body>
         {% block title %}
-        <h1>Создать объявление</h1>
+        <h1>Откликнуться на пост</h1>
         <hr>
         {% endblock title %}
 
         {% block content %}
         <form method="POST">
             {% csrf_token %}
-            {{ form.media }}
             {{ form.as_p }}
-            <input type="submit" value="Сохранить"/>
+            <input type="submit" value="Отправить"/>
         </form>
         {% endblock content %}
     </body>

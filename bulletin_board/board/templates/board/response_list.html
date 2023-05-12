@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Все отклики</title>
+    </head>
+    <body>
+    {% block content %}
+    {% if response_list %}
+    {% for response in response_list %}
+        <p>{{ response.body }}</p>
+        <p>Отклик на "{{ response.post.title }}" от пользователя {{ response.user }} {{ response.created|date:'d.m.y' }}"</p>
+        <hr>
+    {% endfor %}
+    {% else %}
+        Откликов нет
+    {% endif %}
+    {% endblock content %}
+    </body>
+</html>

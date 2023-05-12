@@ -13,6 +13,7 @@
     <hr>
     Отправил: {{ post.user }}<br>
     Категория: {{ post.get_category_display }}
+    <button style="float: right;"> <a href="{% url 'respond' pk=post.pk %}">Откликнуться</a></button>
     {% endblock content %}
     </body>
 </html>
