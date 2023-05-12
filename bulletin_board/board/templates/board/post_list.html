@@ -1,20 +1,22 @@
-{% block title %}
-<h1>Объявления</h1>
-{% endblock title %}
-
-{% block content %}
-{% if post_list %}
-<table>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Все объявления</title>
+    </head>
+    <body>
+    {% block content %}
+    {% if post_list %}
     {% for post in post_list %}
-    <tr>
-        <td>{{ post.title }}</td>
-        <td>{{ post.body }}</td>
-        <td>{{ post.category }}</td>
-        <td>{{ post.user }}</td>
-    </tr>
+        <p><h2>{{ post.title }}</h2></p>
+        <hr>
+        <p>{{ post.body|safe }}</p>
+        <p>Создано: {{ post.user }} в категории {{ post.category }}</p>
+        <hr>
     {% endfor %}
-</table>
-{% else %}
-    Объявлений нет
-{% endif %}
-{% endblock content %}
+    {% else %}
+        Объявлений нет
+    {% endif %}
+    {% endblock content %}
+    </body>
+</html>

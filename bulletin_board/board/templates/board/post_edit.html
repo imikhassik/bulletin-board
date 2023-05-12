@@ -1,12 +1,21 @@
-{% block title %}
-<h1>Создать объявление</h1>
-<hr>
-{% endblock title %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
 
-{% block content %}
-<form enctype="multipart/form-data" action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Сохранить"/>
-</form>
-{% endblock content %}
+    </head>
+    <body>
+        {% block title %}
+        <h1>Создать объявление</h1>
+        <hr>
+        {% endblock title %}
+
+        {% block content %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <input type="submit" value="Save"/>
+        </form>
+        {% endblock content %}
+    </body>
+</html>

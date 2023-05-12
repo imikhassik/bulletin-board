@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Объявление</title>
+    </head>
+    <body>
+    {% block content %}
+    <h1>{{ post.title}}</h1>
+    {{ post.created|date:'d.m.y' }}
+    <hr>
+    <pre>{{ post.body|safe }}</pre>
+    <hr>
+    Отправил: {{ post.user }}
+    Категория: {{ post.category }}
+    {% endblock content %}
+    </body>
+</html>

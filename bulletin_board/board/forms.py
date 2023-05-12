@@ -1,9 +1,10 @@
 from django import forms
 
-from .models import Post, Attachment
+from .models import Post
 
 
 class PostCreateForm(forms.ModelForm):
+
     class Meta:
         model = Post
         fields = [
@@ -14,5 +15,5 @@ class PostCreateForm(forms.ModelForm):
         labels = {
             'title': 'Заголовок',
             'body': '',
-            'category': 'Категория'
+            'category': 'Категория',
         }
