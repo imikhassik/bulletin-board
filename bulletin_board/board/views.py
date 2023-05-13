@@ -1,4 +1,6 @@
 from django.views import generic
+from django.shortcuts import HttpResponseRedirect
+from django.urls import reverse
 
 from .models import Post, User, Response
 from .forms import PostCreateForm, ResponseCreateForm
@@ -42,6 +44,11 @@ class ResponseList(generic.ListView):
     ordering = '-created'
 
 
+class ResponseDetail(generic.DetailView):
+    model = Response
+    template_name = 'board/response_detail.html'
+
+
 class ResponseCreate(generic.CreateView):
     model = Response
     template_name = 'board/response_create.html'
@@ -59,3 +66,17 @@ class ResponseCreate(generic.CreateView):
 
 class SuccessView(generic.TemplateView):
     template_name = 'board/success.html'
+
+
+def accept_response(request, pk):
+    response = Response.objects.get(pk=pk)
+    response.status = 'A'
+    response.save()
+    return HttpResponseRedirect(reverse('response_list'))
+
+
+def deny_response(request, pk):
+    response = Response.objects.get(pk=pk)
+    response.status = 'D'
+    response.save()
+    return HttpResponseRedirect(reverse('response_list'))

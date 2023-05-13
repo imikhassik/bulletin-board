@@ -32,3 +32,5 @@ class Response(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    status = models.CharField(max_length=1, null=True, choices=[('A', 'Принят'),
+                                                                ('D', 'Отклонён')])

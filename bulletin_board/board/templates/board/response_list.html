@@ -8,10 +8,18 @@
     {% block content %}
     {% if response_list %}
     {% for response in response_list %}
-        <p>{{ response.created|date:'d.m.y' }}</p>
-        <p>{{ response.body }}</p>
-        <p>Отклик на "{{ response.post.title }}" от пользователя {{ response.user }}</p>
-        <hr>
+        {% if response.status == 'A' or response.status is None %}
+            <p>{{ response.created|date:'d.m.y' }}</p>
+            <p>{{ response.body }}</p>
+            <p>Отклик на "{{ response.post.title }}" от пользователя {{ response.user }}</p>
+                {% if response.status == 'A' %}
+                    <p>{{ response.get_status_display }}</p>
+                {% else %}
+                    <a href="{% url 'accept' pk=response.pk %}"><button>Принять</button></a>
+                    <a href="{% url 'deny' pk=response.pk %}"><button>Отклонить</button></a>
+                {% endif %}
+            <hr>
+        {% endif %}
     {% endfor %}
     {% else %}
         Откликов нет

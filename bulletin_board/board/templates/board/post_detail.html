@@ -9,7 +9,7 @@
     <h1>{{ post.title}}</h1>
     {{ post.created|date:'d.m.y' }}
     <hr>
-    <pre>{{ post.body|safe }}</pre>
+    {{ post.body|safe }}
     <hr>
     Отправил: {{ post.user }}<br>
     Категория: {{ post.get_category_display }}
