@@ -13,7 +13,7 @@
     <hr>
     Отправил: {{ post.user }}<br>
     Категория: {{ post.get_category_display }}
-    <p><a href="{% url 'respond' pk=post.pk %}"><button>Откликнуться</button></a></p>
+    <p><a href="{% url 'update_post' pk=post.pk %}"><button>Редактировать</button></a></p>
     {% endblock content %}
     </body>
 </html>
