@@ -4,7 +4,6 @@ from .models import Post, Response
 
 
 class PostCreateForm(forms.ModelForm):
-
     class Meta:
         model = Post
         fields = [

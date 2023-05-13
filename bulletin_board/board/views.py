@@ -39,6 +39,7 @@ class ResponseList(generic.ListView):
     model = Response
     template_name = 'board/response_list.html'
     context_object_name = 'response_list'
+    ordering = '-created'
 
 
 class ResponseCreate(generic.CreateView):
