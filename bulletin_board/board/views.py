@@ -1,6 +1,8 @@
 from django.views import generic
 from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 from .models import Post, User, Response
 from .forms import PostCreateForm, ResponseCreateForm
@@ -18,7 +20,7 @@ class PostDetail(generic.DetailView):
     template_name = 'board/post_detail.html'
 
 
-class PostCreate(generic.CreateView):
+class PostCreate(LoginRequiredMixin, generic.CreateView):
     model = Post
     template_name = 'board/post_edit.html'
     form_class = PostCreateForm
@@ -31,25 +33,25 @@ class PostCreate(generic.CreateView):
         return result
 
 
-class PostUpdate(generic.UpdateView):
+class PostUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Post
     template_name = 'board/post_edit.html'
     form_class = PostCreateForm
 
 
-class ResponseList(generic.ListView):
+class ResponseList(LoginRequiredMixin, generic.ListView):
     model = Response
     template_name = 'board/response_list.html'
     context_object_name = 'response_list'
     ordering = '-created'
 
 
-class ResponseDetail(generic.DetailView):
+class ResponseDetail(LoginRequiredMixin, generic.DetailView):
     model = Response
     template_name = 'board/response_detail.html'
 
 
-class ResponseCreate(generic.CreateView):
+class ResponseCreate(LoginRequiredMixin, generic.CreateView):
     model = Response
     template_name = 'board/response_create.html'
     form_class = ResponseCreateForm
@@ -64,10 +66,11 @@ class ResponseCreate(generic.CreateView):
         return result
 
 
-class SuccessView(generic.TemplateView):
+class SuccessView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'board/success.html'
 
 
+@login_required()
 def accept_response(request, pk):
     response = Response.objects.get(pk=pk)
     response.status = 'A'
@@ -75,6 +78,7 @@ def accept_response(request, pk):
     return HttpResponseRedirect(reverse('response_list'))
 
 
+@login_required()
 def deny_response(request, pk):
     response = Response.objects.get(pk=pk)
     response.status = 'D'
