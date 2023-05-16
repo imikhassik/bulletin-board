@@ -48,7 +48,11 @@ def login_with_code_view(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             code = form.cleaned_data['code']
-            user = User.objects.get(username=username)
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                message = 'User does not exist'
+                return render(request, 'account/code_login.html', context={'form': form, 'message': message})
             if OneTimeCode.objects.filter(code=code, user__username=username).exists():
                 login(request, user)
                 return redirect('/')
