@@ -18,3 +18,13 @@ class BaseRegisterForm(UserCreationForm):
             'password1',
             'password2',
         )
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(max_length=100, widget=forms.PasswordInput)
+
+
+class CodeLoginForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    code = forms.CharField(max_length=100)
