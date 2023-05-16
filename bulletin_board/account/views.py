@@ -27,7 +27,7 @@ def login_view(request):
                 password=form.cleaned_data['password']
             )
             if user is not None:
-                code=OneTimeCode.objects.create(code=random.choice('abcde'), user=user)
+                code=OneTimeCode.objects.create(code=random.randint(1000000, 999999999), user=user)
                 send_mail(
                     subject='Доска объявлений: ваш одноразовый код',
                     message=f'Код: {code.code}',
