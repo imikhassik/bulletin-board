@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
 
 from .models import Post, User, Response
 from .forms import PostCreateForm, ResponseCreateForm
@@ -82,6 +83,12 @@ class ResponseCreate(LoginRequiredMixin, generic.CreateView):
         self.object.post = Post.objects.get(id=self.kwargs['pk'])
         self.object.save()
         result = super().form_valid(form)
+        send_mail(
+            subject=f'Получен отклик на пост "{self.object.post.title}"',
+            message=f'Отклик: "{self.object.body}"',
+            from_email='ilya.mikhassik@yandex.ru',
+            recipient_list=[self.object.post.user.email]
+        )
         return result
 
 
@@ -94,6 +101,12 @@ def accept_response(request, pk):
     response = Response.objects.get(pk=pk)
     response.status = 'A'
     response.save()
+    send_mail(
+        subject=f'Доска объявлений: отлик принят',
+        message=f'Ваш отклик на пост "{response.post.title}" принят',
+        from_email='ilya.mikhassik@yandex.ru',
+        recipient_list=[response.user.email]
+    )
     return HttpResponseRedirect(reverse('response_list'))
 
 
