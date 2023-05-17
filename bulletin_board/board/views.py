@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
 from .models import Post, User, Response
 from .forms import PostCreateForm, ResponseCreateForm
@@ -35,8 +36,15 @@ class PostCreate(LoginRequiredMixin, generic.CreateView):
 
 class PostUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Post
-    template_name = 'board/post_edit.html'
     form_class = PostCreateForm
+
+    def get_template_names(self):
+        post = self.get_object()
+        if post.user == self.request.user:
+            self.template_name = 'board/post_edit.html'
+            return self.template_name
+        else:
+            raise PermissionDenied
 
 
 class ResponseList(LoginRequiredMixin, generic.ListView):
@@ -45,10 +53,21 @@ class ResponseList(LoginRequiredMixin, generic.ListView):
     context_object_name = 'response_list'
     ordering = '-created'
 
+    def get_queryset(self):
+        queryset = Response.objects.filter(post__user=self.request.user)
+        return queryset
+
 
 class ResponseDetail(LoginRequiredMixin, generic.DetailView):
     model = Response
-    template_name = 'board/response_detail.html'
+
+    def get_template_names(self):
+        response = self.get_object()
+        if response.post.user == self.request.user:
+            self.template_name = 'board/response_detail.html'
+            return self.template_name
+        else:
+            raise PermissionDenied
 
 
 class ResponseCreate(LoginRequiredMixin, generic.CreateView):
