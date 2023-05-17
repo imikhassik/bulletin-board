@@ -59,7 +59,7 @@ class Command(BaseCommand):
 
         scheduler.add_job(
             weekly_email_job,
-            trigger=CronTrigger(second="*/10"),
+            trigger=CronTrigger(week="*"),
             id="weekly_email_job",
             max_instances=1,
             replace_existing=True,
